@@ -1,0 +1,189 @@
+/* ESTILOS DEL MENÚ (HEADER)*/
+
+.menu-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: linear-gradient(
+        90deg, 
+        rgb(255, 180, 226) 0%,
+        rgb(181, 253, 255) 100%
+    );
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.brain-icon {
+    font-size: 28px;
+    animation: float 3s ease-in-out infinite;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.menu-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 30px;
+}
+
+.menu-links li {
+    position: relative;
+}
+
+.menu-links a {
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    background-color: transparent;
+}
+
+/* EFECTO HOVER - FONDO SEMITRANSPARENTE */
+.menu-links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 25px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.menu-links a:hover::before {
+    opacity: 1;
+}
+
+/* ENLACE INICIO - ROSADO al hover */
+.link-home:hover {
+    color: #ff6b9d;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+}
+
+
+
+/* ENLACE PRODUCTOS - NARANJA al hover */
+.link-products:hover {
+    color: #ff9f43;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 159, 67, 0.3);
+}
+
+/* ENLACE CHAT IA - AZUL al hover */
+.link-chat:hover {
+    color: #4facfe;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+}
+
+
+
+/* ACTIVO - Página actual */
+.menu-links a.active {
+    background-color: white;
+    color: #2c3e50;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/*ESTILOS DE LA PÁGINA CHAT IA*/
+
+body {
+    margin: 0;
+    padding-top: 80px;
+    font-family: "Comic Neue", cursive;
+    
+    /* FONDO DE LA IMAGEN QUE PASASTE */
+    background-image: url('imagenes/Fondo CHAT IA.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+    min-height: 100vh;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 80px);
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(12px);
+    border-radius: 25px;
+    padding: 50px;
+    max-width: 800px;
+    width: 90%;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    animation: floatCard 6s ease-in-out infinite;
+}
+
+
+h1 {
+    color: #333;
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.intro-text {
+    color: #444;
+    line-height: 1.8;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
