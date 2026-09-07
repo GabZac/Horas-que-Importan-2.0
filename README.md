@@ -15,7 +15,7 @@ Nuestra campaña visual Horas Que Importan desarrolla un nuevo producto basado e
 * **Curso:** 5to 3ra 
 * **Materia o Asignatura:** Laboratorio en Programación
 * **Profesores:** Yamil Ganduglia, York Mansilla
-* **Página Web:** <https://horasqueimportan.infinityfreeapp.com>
+* **Página Web:** <http://horasqueimportan.infinityfreeapp.com>
 
 ## Características Principales
 - Característica 1: Proyector para mesita de luz con audio integrado
