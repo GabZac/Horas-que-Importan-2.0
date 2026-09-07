@@ -1,16 +1,13 @@
 <?php
+$host = "sql104.infinityfree.com";
+$user = "if0_42843290";
+$pass = "xEptszfCm7F"; 
+$db   = "if0_42843290_memot";
 
-$host = "localhost";
-$usuario = "root";
-$password = "";
-$basedatos = "memot";
+$conn = mysqli_connect($host, $user, $pass, $db);
 
-$conn = new mysqli($host, $usuario, $password, $basedatos);
-
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
-
-$conn->set_charset("utf8");
-
+mysqli_set_charset($conn, "utf8mb4");
 ?>

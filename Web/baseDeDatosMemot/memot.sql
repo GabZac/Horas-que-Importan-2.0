@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-06-2026 a las 16:05:17
+-- Tiempo de generación: 07-09-2026 a las 18:06:52
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `memot`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `encuestas`
+--
+
+CREATE TABLE `encuestas` (
+  `id` int(11) NOT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
+  `horas_sueño` varchar(50) DEFAULT NULL,
+  `dificultad` varchar(100) DEFAULT NULL,
+  `metodos_relajacion` varchar(255) DEFAULT NULL,
+  `funcion_deseada` varchar(100) DEFAULT NULL,
+  `sugerencias` text DEFAULT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `encuestas`
+--
+
+INSERT INTO `encuestas` (`id`, `id_usuario`, `horas_sueño`, `dificultad`, `metodos_relajacion`, `funcion_deseada`, `sugerencias`, `fecha`) VALUES
+(1, 1, 'mas_8', 'estres', 'musica', 'chat_ia', 'buen trabajo', '2026-09-06 00:11:17');
 
 -- --------------------------------------------------------
 
@@ -43,7 +67,11 @@ CREATE TABLE `registros_sueno` (
 
 INSERT INTO `registros_sueno` (`id_registro`, `id_usuario`, `fecha`, `hora_dormir`, `hora_despertar`, `horas_dormidas`, `calidad_sueno`) VALUES
 (1, 1, '2026-06-29', '23:40:00', '10:00:00', 10.33, 4),
-(2, 1, '2026-06-28', '20:34:00', '03:30:00', 6.93, 2);
+(2, 1, '2026-06-28', '20:34:00', '03:30:00', 6.93, 2),
+(3, 2, '2026-06-30', '14:27:00', '08:27:00', 18.00, 2),
+(4, 1, '2026-07-01', '17:08:00', '23:08:00', 6.00, 2),
+(5, 1, '2026-07-03', '06:15:00', '16:20:00', 10.08, 1),
+(6, 1, '2026-07-07', '12:00:00', '22:13:00', 10.22, 2);
 
 -- --------------------------------------------------------
 
@@ -92,6 +120,13 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `fecha_nacimiento`, 
 --
 
 --
+-- Indices de la tabla `encuestas`
+--
+ALTER TABLE `encuestas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_encuestas_usuarios` (`id_usuario`);
+
+--
 -- Indices de la tabla `registros_sueno`
 --
 ALTER TABLE `registros_sueno`
@@ -117,10 +152,16 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `encuestas`
+--
+ALTER TABLE `encuestas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `registros_sueno`
 --
 ALTER TABLE `registros_sueno`
-  MODIFY `id_registro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_registro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `temas_usuario`
@@ -137,6 +178,12 @@ ALTER TABLE `usuarios`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `encuestas`
+--
+ALTER TABLE `encuestas`
+  ADD CONSTRAINT `fk_encuestas_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `registros_sueno`

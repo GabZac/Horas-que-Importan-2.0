@@ -18,35 +18,16 @@ $nombre = $_SESSION["nombre"];
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Mi Perfil - Memot</title>
-
-<link rel="stylesheet" href="../CSS/Style.css">
-<link rel="stylesheet" href="../CSS/Perfil.css">
-
+<link rel="stylesheet" href="../CSS/Style.css?v=15.0">
+    <link rel="stylesheet" href="../CSS/Mistemas.css?v=15.0">
+<link rel="stylesheet" href="../CSS/Perfil.css?v=4.0">
+<link rel="stylesheet" href="../CSS/Navegacion.css?v=2.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 
-<header class="menu-header">
-
-<nav class="navbar">
-
-<div class="logo">
-HORAS QUE IMPORTAN
-</div>
-
-<ul class="menu-links">
-
-<li><a href="../Index.php">Inicio</a></li>
-<li><a href="Producto.php">Productos</a></li>
-<li><a href="Mistemas.php">Mis Temas</a></li>
-<li><a href="Asistente.php">Chat IA</a></li>
-<li><a href="Perfil.php" class="active">Mi Perfil</a></li>
-
-</ul>
-
-</nav>
-
-</header>
+<?php $paginaActiva = ''; $rutaBase = '../'; require __DIR__ . '/../includes/header.php'; ?>
 
 <main class="perfil-container">
 
@@ -253,8 +234,9 @@ max:12
 
 });
 
-</script>
-
+ </script>
+<script src="../JS/menu.js"></script>
+    
 </body>
 
 </html>

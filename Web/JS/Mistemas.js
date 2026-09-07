@@ -1,94 +1,102 @@
-let dispositivoConectado = true; 
+document.addEventListener("DOMContentLoaded", () => {
+    const ESP32_IP = "http://192.168.1.50"; 
 
-function verificarConexion() {
-    const dot = document.querySelector('.status-dot');
-    const texto = dot.parentElement;
-    if (!dispositivoConectado) {
-        dot.style.backgroundColor = '#e74c3c';
-        texto.innerHTML = '<span class="status-dot" style="background-color: #e74c3c;"></span>Sin conexión';
-    }
-}
+    // Referencias DOM
+    const statusTexto = document.getElementById('status-texto');
+    const textoConexion = document.getElementById('texto-conexion');
+    const sliderVolumen = document.getElementById('slider-volumen');
+    const sliderLuz = document.getElementById('slider-luz');
+    const pickerColor = document.getElementById('picker-color');
+    const selectAudio = document.getElementById('select-audio');
+    const checkEfecto = document.getElementById('check-efecto');
+    const checkApagado = document.getElementById('check-apagado');
+    const btnListo = document.querySelector('.btn-listo');
 
-const botonesTema = document.querySelectorAll('.btn-tema');
-botonesTema.forEach(boton => {
-    boton.addEventListener('click', () => {
-        document.querySelector('.btn-tema.active').classList.remove('active');
-        boton.classList.add('active');
-    });
-});
-
-const selectMovimiento = document.getElementById('select-movimiento');
-const panelEfectos = document.getElementById('panel-efectos');
-
-selectMovimiento.addEventListener('change', () => {
-    if (selectMovimiento.value === 'si') {
-        panelEfectos.style.display = 'block';
-    } else {
-        panelEfectos.style.display = 'none';
-    }
-});
-
-const botonesEfecto = document.querySelectorAll('.btn-efecto');
-botonesEfecto.forEach(boton => {
-    boton.addEventListener('click', () => {
-        document.querySelector('.btn-efecto.active').classList.remove('active');
-        boton.classList.add('active');
-    });
-});
-
-const btnListo = document.querySelector('.btn-listo');
-const sliderVolumen = document.querySelector('.control-group:nth-of-type(1) .slider');
-const sliderLuz = document.querySelector('.control-group:nth-of-type(2) .slider');
-const pickerColor = document.querySelector('.picker-color');
-const checkApagado = document.querySelector('.toggle-row input');
-
-btnListo.addEventListener('click', () => {
-    const temaActivo = document.querySelector('.btn-tema.active').innerText;
-    const efectoActivo = document.querySelector('.btn-efecto.active').innerText;
-    
-    localStorage.setItem('memot_tema', temaActivo);
-    localStorage.setItem('memot_volumen', sliderVolumen.value);
-    localStorage.setItem('memot_luz', sliderLuz.value);
-    localStorage.setItem('memot_color', pickerColor.value);
-    localStorage.setItem('memot_movimiento_luz', selectMovimiento.value);
-    localStorage.setItem('memot_efecto_luz', efectoActivo);
-    if(checkApagado) localStorage.setItem('memot_apagado', checkApagado.checked);
-    
-    alert('¡Configuración de luces y temas guardada! 🌙');
-});
-
-function cargarConfiguracion() {
-    verificarConexion();
-    
-    if (localStorage.getItem('memot_tema')) {
-        const temaGuardado = localStorage.getItem('memot_tema');
-        botonesTema.forEach(b => {
-            if (b.innerText === temaGuardado) {
-                document.querySelector('.btn-tema.active').classList.remove('active');
-                b.classList.add('active');
-            }
-        });
-        
-        sliderVolumen.value = localStorage.getItem('memot_volumen');
-        sliderLuz.value = localStorage.getItem('memot_luz');
-        pickerColor.value = localStorage.getItem('memot_color');
-        
-        const movGuardado = localStorage.getItem('memot_movimiento_luz');
-        selectMovimiento.value = movGuardado;
-        if (movGuardado === 'si') {
-            panelEfectos.style.display = 'block';
+    function actualizarEstadoConexion(conectado) {
+        if (conectado) {
+            statusTexto.className = "conectado";
+            textoConexion.textContent = "Conectado";
+        } else {
+            statusTexto.className = "desconectado";
+            textoConexion.textContent = "Desconectado";
         }
-        
-        const efectoGuardado = localStorage.getItem('memot_efecto_luz');
-        botonesEfecto.forEach(b => {
-            if (b.innerText === efectoGuardado) {
-                document.querySelector('.btn-efecto.active').classList.remove('active');
-                b.classList.add('active');
-            }
-        });
-
-        if(checkApagado) checkApagado.checked = localStorage.getItem('memot_apagado') === 'true';
     }
-}
 
-window.onload = cargarConfiguracion;
+    function verificarConexionESP32() {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+        fetch(`${ESP32_IP}/get`, { signal: controller.signal })
+            .then(response => {
+                clearTimeout(timeoutId);
+                actualizarEstadoConexion(response.ok);
+            })
+            .catch(() => {
+                clearTimeout(timeoutId);
+                actualizarEstadoConexion(false);
+            });
+    }
+
+    function enviarComandoESP32(urlParams) {
+        fetch(`${ESP32_IP}/set?${urlParams}`, { mode: 'no-cors' })
+            .then(() => actualizarEstadoConexion(true))
+            .catch(() => actualizarEstadoConexion(false));
+    }
+
+    // Cambio de audio en tiempo real
+    if (selectAudio) {
+        selectAudio.addEventListener('change', (e) => {
+            enviarComandoESP32(`audio=${e.target.value}`);
+        });
+    }
+
+    // Cambio de color en tiempo real
+    if (pickerColor) {
+        pickerColor.addEventListener('change', (e) => {
+            const hex = e.target.value;
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+
+            enviarComandoESP32(`tema=3&r=${r}&g=${g}&b=${b}`);
+        });
+    }
+
+    // Guardar cambios
+    if (btnListo) {
+        btnListo.addEventListener('click', () => {
+            localStorage.setItem('memot_volumen', sliderVolumen.value);
+            localStorage.setItem('memot_luz', sliderLuz.value);
+            localStorage.setItem('memot_color', pickerColor.value);
+            if (selectAudio) localStorage.setItem('memot_audio', selectAudio.value);
+            localStorage.setItem('memot_efecto', checkEfecto.checked);
+            localStorage.setItem('memot_apagado', checkApagado.checked);
+
+            const hex = pickerColor.value;
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+
+            let params = `tema=3&r=${r}&g=${g}&b=${b}&volumen=${sliderVolumen.value}`;
+            if (selectAudio) params += `&audio=${selectAudio.value}`;
+
+            enviarComandoESP32(params);
+
+            alert('¡Configuración guardada! 🌙');
+        });
+    }
+
+    // Cargar historial
+    function cargarConfiguracionLocal() {
+        if (localStorage.getItem('memot_volumen')) sliderVolumen.value = localStorage.getItem('memot_volumen');
+        if (localStorage.getItem('memot_luz')) sliderLuz.value = localStorage.getItem('memot_luz');
+        if (localStorage.getItem('memot_color')) pickerColor.value = localStorage.getItem('memot_color');
+        if (selectAudio && localStorage.getItem('memot_audio')) selectAudio.value = localStorage.getItem('memot_audio');
+        if (localStorage.getItem('memot_efecto')) checkEfecto.checked = localStorage.getItem('memot_efecto') === 'true';
+        if (localStorage.getItem('memot_apagado')) checkApagado.checked = localStorage.getItem('memot_apagado') === 'true';
+    }
+
+    cargarConfiguracionLocal();
+    verificarConexionESP32();
+    setInterval(verificarConexionESP32, 5000);
+});

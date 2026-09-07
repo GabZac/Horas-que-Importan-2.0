@@ -8,70 +8,15 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horas Que Importan - Chat IA</title>
-    <link href="https://googleapis.com" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/Asistente.css">
+    <link rel="stylesheet" href="../CSS/Asistente.css?v=4.0">
+	<link rel="stylesheet" href="../CSS/Style.css?v=15.0">
+    <link rel="stylesheet" href="../CSS/Mistemas.css?v=15.0">
+    <link rel="stylesheet" href="../CSS/Navegacion.css?v=2.0">
 </head>
 
 <body>
 
-<header class="menu-header">
-    <nav class="navbar">
-
-        <div class="logo">HORAS QUE IMPORTAN</div>
-
-        <ul class="menu-links">
-            <li><a href="../Index.php">Inicio</a></li>
-            <li><a href="Producto.php">Productos</a></li>
-            <li><a href="Mistemas.php">Mis Temas</a></li>
-            <li><a href="Asistente.php" class="active">Chat IA</a></li>
-        </ul>
-
-        <div class="user-menu-container">
-
-            <?php if(isset($_SESSION["id_usuario"])): ?>
-
-                <a href="Perfil.php" class="user-avatar">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                    </svg>
-                </a>
-
-                <div class="dropdown-menu">
-                    <p>Hola, <strong><?php echo $_SESSION["nombre"]; ?></strong> 👋</p>
-
-                    <a href="Perfil.php" class="btn-login-menu">
-                        Mi Perfil
-                    </a>
-
-                    <br><br>
-
-                    <a href="../PHP/logout.php" class="btn-login-menu">
-                        Cerrar Sesión
-                    </a>
-                </div>
-
-            <?php else: ?>
-
-                <a href="Login.php" class="user-avatar">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                    </svg>
-                </a>
-
-                <div class="dropdown-menu">
-                    <p>¡Hola! Iniciá sesión.</p>
-
-                    <a href="Login.php" class="btn-login-menu">
-                        Iniciar Sesión
-                    </a>
-                </div>
-
-            <?php endif; ?>
-
-        </div>
-
-    </nav>
-</header>
+<?php $paginaActiva = 'chat'; $rutaBase = '../'; require __DIR__ . '/../includes/header.php'; ?>
 
 <main class="main-container">
 
@@ -132,6 +77,8 @@ window.addEventListener("load",onLoad)
 }
 })();
 </script>
+    
+    <script src="../JS/menu.js"></script>
 
 </body>
 </html>

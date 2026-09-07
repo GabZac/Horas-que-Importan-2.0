@@ -2,8 +2,12 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); /* Degradado suave */
+  font-family: 'Nunito', 'Segoe UI', sans-serif;
+  background-image: url('../IMAGENES/memo-fondo.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -43,12 +47,12 @@ nav {
   max-width: 460px;
   width: 90%;
   margin: auto; 
-  background: rgba(255, 255, 255, 0.75); 
-  backdrop-filter: blur(10px); 
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 192, 203, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   padding: 45px 40px;
-  border-radius: 16px;
-  box-shadow: 0 10px 35px 0 rgba(31, 38, 135, 0.18);
+  border-radius: 24px;
+  box-shadow: 0 10px 35px rgba(44, 62, 80, 0.14);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-sizing: border-box;
 }
@@ -62,8 +66,9 @@ nav {
   margin-top: 0;
   margin-bottom: 25px;
   color: #2c3e50;
+  font-family: 'Dancing Script', cursive;
   text-align: center;
-  font-size: 24px;
+  font-size: 2.4rem;
 }
 
 .form-group {
@@ -73,8 +78,9 @@ nav {
 .form-group label {
   display: block;
   margin-bottom: 8px;
-  color: #57606f;
-  font-size: 14px;
+  color: #2c3e50;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.5rem;
   font-weight: 600;
 }
 
@@ -98,20 +104,22 @@ nav {
 .btn-submit {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
-  color: white;
+  background: rgba(255, 255, 255, 0.9);
+  color: #2c3e50;
   border: none;
-  border-radius: 8px;
+  border-radius: 30px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1.1rem;
   font-weight: bold;
   transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .btn-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+  background: white;
+  color: #e67e22;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(230, 126, 34, 0.25);
 }
 
 .btn-submit:active {
@@ -125,4 +133,14 @@ nav {
   margin-top: 15px;
   font-weight: 500;
   display: none;
+}
+
+.login-container p {
+  color: #2c3e50;
+  text-align: center;
+}
+
+.login-container p a {
+  color: #d86e21;
+  font-weight: 800;
 }
